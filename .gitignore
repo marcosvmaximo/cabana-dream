@@ -1,0 +1,62 @@
+# Arquivos e diretórios específicos para a plataforma .NET
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.user
+*.suo
+*.cache
+*.log
+*.vs/
+*.vscode/
+
+# Arquivos gerados pelo Visual Studio
+[Bb]in/
+[Oo]bj/
+*.csproj.user
+*.sln.docstates
+*.userprefs
+
+# Arquivos gerados pelo Visual Studio Code
+.vscode/
+
+# Arquivos gerados pelo NuGet
+*.nuget.props
+*.nuget.targets
+
+# Arquivos de configuração de ambiente
+*.env
+*.env.*
+*.local
+*.local.*
+
+# Arquivos de configuração específicos para IDEs
+*.vscode
+*.suo
+*.user
+*.userprefs
+
+# Arquivos de cache e logs
+*.log
+*.cache
+
+# Arquivos de dependências e pacotes
+packages/
+*.nupkg
+*.paket.restore.cs
+
+# Arquivos temporários
+*~
+*.lock
+
+# Arquivos de configuração do editor
+editorconfig
+*.editorconfig
+
+# Cache de ferramentas de desenvolvimento
+.vs/
+
+# Arquivos específicos do Rider (IDE)
+.idea/
+

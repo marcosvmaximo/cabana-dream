@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Entities\" />
+    <None Remove="ValueObjects\" />
+    <None Remove="Services\" />
+    <None Remove="Enum\" />
+    <None Remove="Repositories\" />
+    <None Remove="Services\Interfaces\" />
+    <None Remove="Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="ValueObjects\" />
+    <Folder Include="Services\" />
+    <Folder Include="Enum\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MVM.CabanasDream.Core\MVM.CabanasDream.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.0" />
+  </ItemGroup>
+</Project>

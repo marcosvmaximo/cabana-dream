@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Commands\" />
+    <None Remove="Queries\" />
+    <None Remove="Commands\Handlers\" />
+    <None Remove="Queries\Handlers\" />
+    <None Remove="Common\" />
+    <None Remove="Common\Validations\" />
+    <None Remove="Events\" />
+    <None Remove="Events\DomainHandlers\" />
+    <None Remove="Queries\Interfaces\" />
+    <None Remove="Queries\Dtos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\" />
+    <Folder Include="Commands\Handlers\" />
+    <Folder Include="Queries\Handlers\" />
+    <Folder Include="Common\" />
+    <Folder Include="Common\Validations\" />
+    <Folder Include="Events\" />
+    <Folder Include="Events\DomainHandlers\" />
+    <Folder Include="Queries\Interfaces\" />
+    <Folder Include="Queries\Dtos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MVM.CabanasDream.Core\MVM.CabanasDream.Core.csproj" />
+    <ProjectReference Include="..\MVM.CabanasDream.Locacao.Domain\MVM.CabanasDream.Locacao.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.6.0" />
+  </ItemGroup>
+</Project>
