@@ -27,7 +27,6 @@ public class FestaContext : DbContext, IUnityOfWork
 
     public async Task<bool> Commit()
     {
-        var x = ChangeTracker.Entries().Select(x => x.Entity);
         var result = await SaveChangesAsync() > 0;
 
         // Serão processados após a persistencia
