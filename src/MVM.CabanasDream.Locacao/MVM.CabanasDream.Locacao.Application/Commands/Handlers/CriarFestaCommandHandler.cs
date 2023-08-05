@@ -3,10 +3,9 @@ using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Results;
 using MVM.CabanasDream.Locacao.Application.Commands;
+using MVM.CabanasDream.Locacao.Domain.Entities;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
 using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
-using MVM.CabanasDream.Locacao.Domain.ValueObjects;
-
 namespace MVM.CabanasDream.Locacao.Application.Handlers;
 
 public class CriarFestaCommandHandler : Handler<CriarFestaCommand>
@@ -32,9 +31,15 @@ public class CriarFestaCommandHandler : Handler<CriarFestaCommand>
             return BaseResult.BadResult();
         }
 
-        var itemsExtras = command.ItemsExtras.Select(x => new ItemDeFesta(x.Nome, x.Quantidade));
+        var artigosExtras = command.ArtigosDeFesta.Select(artigo =>
+            new ArtigoFesta(artigo!.Nome, artigo.ValorExtra, artigo.Quantidade));
 
-        await _service.LocarFesta(command.ClienteId, command.TemaId, command.QuantidadeParticipantes, command.DataRealizacao, itemsExtras.ToList());
+        await _service.LocarFesta(
+            command.ClienteId,
+            command.TemaId,
+            command.QuantidadeParticipantes,
+            command.DataRealizacao,
+            artigosExtras.ToList());
 
         await _repository.UnityOfWork.Commit();
 

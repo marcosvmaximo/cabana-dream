@@ -1,15 +1,18 @@
 ﻿using MVM.CabanasDream.Core.Domain.AssertionConcern;
+using MVM.CabanasDream.Core.Domain.DomainEvents.Common;
 using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Core.Domain.Interfaces;
 using MVM.CabanasDream.Core.Domain.Models;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
 using MVM.CabanasDream.Locacao.Domain.Entities;
 using MVM.CabanasDream.Locacao.Domain.Enum;
-using MVM.CabanasDream.Locacao.Domain.ValueObjects;
+using MVM.CabanasDream.Locacao.Domain.Events;
+using MVM.CabanasDream.Locacao.Domain.Events.Festas;
 
 namespace MVM.CabanasDream.Locacao.Domain;
 public class Festa : Entity, IAggregateRoot
 {
-    private readonly IList<ItemDeFesta> _itensExtras;
+    private readonly IList<ArtigoFesta> _artigosDeFesta;
 
     protected Festa() { }
 
@@ -20,13 +23,15 @@ public class Festa : Entity, IAggregateRoot
         DateTime dataRealizacao)
     {
         Tema = tema;
-        TemaId = tema.Id;
         Cliente = cliente;
-        ClienteId = cliente.Id;
         QuantidadeParticipantes = quantidadeParticipantes;
-        Status = EStatusFesta.Pendente;
         DataRealizacao = dataRealizacao;
-        _itensExtras = new List<ItemDeFesta>();
+
+        TemaId = tema.Id;
+        ClienteId = cliente.Id;
+
+        Status = EStatusFesta.Pendente;
+        _artigosDeFesta = new List<ArtigoFesta>();
 
         Validar();
     }
@@ -37,28 +42,32 @@ public class Festa : Entity, IAggregateRoot
     public Guid ClienteId { get; private set; }
     public int QuantidadeParticipantes { get; private set; }
     public EStatusFesta Status { get; private set; }
-    public ContratoLocacao? ContratoLocacao { get; private set; }
     public Guid? ContratoId { get; private set; }
     public DateTime DataRealizacao { get; private set; }
-    public IReadOnlyCollection<ItemDeFesta> ItensExtras => _itensExtras.ToList();
+    public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _artigosDeFesta.ToList();
 
-    public void CancelarFesta()
+    public void ConfirmarFesta() => Status = EStatusFesta.AguardandoPagamento;
+    public void EntregarFesta() => Status = EStatusFesta.EmAndamento;
+
+    public void CancelarFesta(DateTime dataFinalizacao, string motivo)
     {
         if (Status == EStatusFesta.Cancelada || Status == EStatusFesta.Finalizada)
             throw new DomainException("Não é possível cancelar uma festa já cancelada ou finalizada");
 
-        if (DataRealizacao <= DateTime.Now)
+        if (DataRealizacao <= DateTime.Now || dataFinalizacao <= DateTime.Now)
             throw new DomainException("Não é possível cancelar uma festa que já foi realizada");
 
         Status = EStatusFesta.Cancelada;
-        ContratoLocacao.QuebrarContrato(Status);
+        AdicionarEvento(new FestaCanceladaEvent(Id, ContratoId, dataFinalizacao, motivo));
     }
 
-    public void ConfirmarFesta() => Status = EStatusFesta.AguardandoPagamento;
-    public void EntregarFesta() => Status = EStatusFesta.EmAndamento;
-    public void FinalizarFesta() => Status = EStatusFesta.Finalizada;
+    public void FinalizarFesta(DateTime dataFinalizacao)
+    {
+        AdicionarEvento(new FestaFinalizadaEvent(Id, dataFinalizacao));
+        Status = EStatusFesta.Finalizada;
+    }
 
-    public void AdicionarItemDeFestaExtra(ItemDeFesta itemDeFesta)
+    public void AdicionarArtigoExtra(ArtigoFesta itemDeFesta)
     {
         if (itemDeFesta == null)
             throw new DomainException("Item De Festa inválido, impossível adicionar um item nulo.");
@@ -66,21 +75,23 @@ public class Festa : Entity, IAggregateRoot
         if (Status != EStatusFesta.Pendente)
             throw new DomainException("Não é mais possível adicionar objetos extras.");
 
-        _itensExtras.Add(itemDeFesta);
+        _artigosDeFesta.Add(itemDeFesta);
     }
 
-    public void AdicionarContrato(ContratoLocacao contrato)
-    {
-        if (contrato == null)
-            throw new DomainException("Contrato inválido, não pode ser nulo.");
+    public DateTime ObterDataDevolucao() => DataRealizacao.AddDays(2);
 
-        if (contrato.DataDevolucao <= DateTime.Now)
-            throw new DomainException("Contrato inválido, não deve possuir uma data de devolução menor que a data atual.");
+    //public void AdicionarContrato(ContratoLocacao contrato)
+    //{
+    //    if (contrato == null)
+    //        throw new DomainException("Contrato inválido, não pode ser nulo.");
 
-        ConfirmarFesta();
-        ContratoLocacao = contrato;
-        ContratoId = contrato.Id;
-    }
+    //    if (contrato.DataDevolucao <= DateTime.Now)
+    //        throw new DomainException("Contrato inválido, não deve possuir uma data de devolução menor que a data atual.");
+
+    //    ConfirmarFesta();
+    //    ContratoLocacao = contrato;
+    //    ContratoId = contrato.Id;
+    //}
 
     public override void Validar()
     {
@@ -94,4 +105,3 @@ public class Festa : Entity, IAggregateRoot
         Assertion.ValidarSeVerdadeiro(DataRealizacao <= DateTime.Now, "O campo {0} não pode ser menor que a data atual");
     }
 }
-

@@ -13,6 +13,6 @@ public class CriarFestaRequest
     public Guid TemaId { get; set; }
     public int QuantidadeParticipantes { get; set; }
     public DateTime DataRealizacao { get; set; }
-    public List<PedidoItemDeFestaExtraCommand?> ItemsExtras { get; set; }
+    public List<ArtigoDeFestaCommand?> ItemsExtras { get; set; }
 }
 

@@ -80,7 +80,7 @@ public class FestaTeste
     {
         Assert.Throws<DomainException>(() =>
         {
-            _festaValida.AdicionarItemDeFestaExtra(null);
+            _festaValida.AdicionarArtigoExtra(null);
         });
     }
 

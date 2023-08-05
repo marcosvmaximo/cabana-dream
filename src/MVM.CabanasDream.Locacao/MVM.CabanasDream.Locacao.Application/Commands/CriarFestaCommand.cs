@@ -5,24 +5,24 @@ namespace MVM.CabanasDream.Locacao.Application.Commands;
 
 public class CriarFestaCommand : Command
 {
-    public Guid ClienteId { get; set; }
-    public Guid TemaId { get; set; }
-    public int QuantidadeParticipantes { get; set; }
-    public DateTime DataRealizacao { get; set; }
-    public List<PedidoItemDeFestaExtraCommand?> ItemsExtras { get; set; }
-
-    public CriarFestaCommand()
-    {
-    }
-
-    public CriarFestaCommand(Guid clienteId, Guid temaId, int quantidadeParticipantes, DateTime dataRealizacao, List<PedidoItemDeFestaExtraCommand?> itemsExtras)
+    public CriarFestaCommand(Guid clienteId, Guid temaId, int quantidadeParticipantes, DateTime dataRealizacao, List<ArtigoDeFestaCommand?> itemsExtras)
     {
         ClienteId = clienteId;
         TemaId = temaId;
         QuantidadeParticipantes = quantidadeParticipantes;
         DataRealizacao = dataRealizacao;
-        ItemsExtras = itemsExtras;
+        ArtigosDeFesta = itemsExtras;
     }
+
+    public CriarFestaCommand()
+    {
+    }
+
+    public Guid ClienteId { get; set; }
+    public Guid TemaId { get; set; }
+    public int QuantidadeParticipantes { get; set; }
+    public DateTime DataRealizacao { get; set; }
+    public List<ArtigoDeFestaCommand?> ArtigosDeFesta { get; set; }
 
     public override bool EhValido()
     {
@@ -31,8 +31,9 @@ public class CriarFestaCommand : Command
     }
 }
 
-public class PedidoItemDeFestaExtraCommand
+public class ArtigoDeFestaCommand
 {
     public string Nome { get; set; }
+    public decimal ValorExtra { get; set; }
     public int Quantidade { get; set; }
 }

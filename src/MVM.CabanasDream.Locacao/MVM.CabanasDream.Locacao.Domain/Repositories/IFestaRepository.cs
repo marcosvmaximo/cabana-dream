@@ -8,7 +8,8 @@ public interface IFestaRepository : IRepository<Festa>
     Task AdicionarFesta(Festa festa);
     Task AtualizarFesta(Festa festa);
     Task<Cliente?> ObterClientePorId(Guid clienteId);
+    Task<IEnumerable<Festa?>> ObterFestasPorCliente(Guid clienteId);
     Task<Festa?> ObterFestaPorId(Guid festaId);
-    Task<Festa?> ObterFestasPendentesPorCliente(Guid clienteId);
     Task<Tema?> ObterTemaPorId(Guid temaId);
+    Task<IEnumerable<ArtigoFesta?>> ObterTodosArtigosDeFesta();
 }

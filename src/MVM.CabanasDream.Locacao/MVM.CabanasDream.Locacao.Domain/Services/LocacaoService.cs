@@ -1,25 +1,27 @@
-﻿using System;
-using MVM.CabanasDream.Core.Comunications.Messages;
-using MVM.CabanasDream.Core.Domain.DomainEvents;
+﻿using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.Domain.Results;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
 using MVM.CabanasDream.Locacao.Domain.Entities;
-using MVM.CabanasDream.Locacao.Domain.Events;
+using MVM.CabanasDream.Locacao.Domain.Events.Festas;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
 using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
-using MVM.CabanasDream.Locacao.Domain.ValueObjects;
 
 namespace MVM.CabanasDream.Locacao.Domain.Services;
 
 public class LocacaoService : ILocacaoService
 {
-    private readonly IMediatrHandler _bus;
+
+    // Irá ter varios handlers recebendo os eventos dos outros dominios, e esse serviço irá trabalha o necessário nesse domonio quando recebermos o evento.
+
+    // Criar os eventos que enviam, e o que recebemos depois.
+    private readonly IMediatrHandler _mediatorHandler;
     private readonly IFestaRepository _repository;
 
-    public LocacaoService(IFestaRepository repository, IMediatrHandler bus)
+    public LocacaoService(IFestaRepository repository, IMediatrHandler mediator)
     {
-        _bus = bus;
+        _mediatorHandler = mediator;
         _repository = repository;
     }
 
@@ -27,23 +29,25 @@ public class LocacaoService : ILocacaoService
                                  Guid temaId,
                                  int quantidadeParticipantes,
                                  DateTime dataRealizacao,
-                                 List<ItemDeFesta> itens = null)
+                                 List<ArtigoFesta> artigos = null)
     {
-        //if (await VerificaClientePossuiFestaPendente(clienteId))
-        //    throw new DomainException("Cliente já possui festa pendente criada.");
+        if (await VerificaClientePossuiFestaPendente(clienteId))
+            throw new DomainException("Cliente já possui festa pendente criada.");
 
         var cliente = ObterCliente(clienteId);
         var tema = ObterTema(temaId);
 
-        var festa = new Festa(tema, cliente, quantidadeParticipantes, dataRealizacao);
-        itens?.ForEach(festa.AdicionarItemDeFestaExtra);
+        var festa = new Festa(tema!, cliente!, quantidadeParticipantes, dataRealizacao);
 
-        tema.AdicionarFesta(festa);
+        artigos?.ForEach(festa.AdicionarArtigoExtra);
 
-        if (tema.Estoque < 1)
-            await _bus.PublicarEvento(new TemaIndisponivelEvent(festa.Id, tema.Id, tema.Estoque));
+        tema!.AdicionarFesta(festa);
+        if (tema.QuantidadeEstoque < 1)
+        {
+            tema.Indisponibilizar();
+        }
 
-        festa.AdicionarEvento(new FestaCriadaEvent(festa.Id, clienteId));
+        festa.AdicionarEvento(new FestaCriadaEvent(festa.Id, clienteId, festa.ObterDataDevolucao()));
 
         await _repository.AdicionarFesta(festa);
     }
@@ -57,7 +61,7 @@ public class LocacaoService : ILocacaoService
             var notificacao = new DomainNotification(
                 nameof(festaPendente),
                 "Cliente já possúi uma festa pendente ou em processamento no momento.");
-            await _bus.PublicarNotificacao(notificacao);
+            await _mediatorHandler.PublicarNotificacao(notificacao);
 
             return true;
         }
@@ -75,11 +79,9 @@ public class LocacaoService : ILocacaoService
         return _repository.ObterClientePorId(clienteId).Result ?? throw new DomainException("Cliente não encontrado");
     }
 
-    public async Task<decimal?> CancelarFesta(Guid festaId)
+    public async Task<Festa> CancelarFesta(Guid festaId)
     {
-        var festa = await _repository.ObterFestaPorId(festaId);
-
-        if (festa == null)
+        Festa festa = await _repository.ObterFestaPorId(festaId) ??
             throw new DomainException("Festa inserida não foi encontrada");
 
         if (festa.DataRealizacao <= DateTime.Now)
@@ -88,38 +90,36 @@ public class LocacaoService : ILocacaoService
         if (festa.Status == Enum.EStatusFesta.Cancelada || festa.Status == Enum.EStatusFesta.Finalizada)
             throw new DomainException("Não é possível cancelar uma festa já cancelada ou finalizada");
 
+        // Marca festa do cliente como cancelada
         festa.CancelarFesta();
+
+        // Volta ao estoque normal.
         festa.Tema?.DecrementarEstoque();
 
-        await _repository.AtualizarFesta(festa!);
-
-        return festa.ContratoLocacao?.Multa;
+        await _repository.AtualizarFesta(festa);
+        return festa;
     }
 
-    public async Task FecharFesta(Guid festaId)
+    public async Task<Festa> FecharContratoFesta(Guid festaId)
     {
+        // recebe o evento e marca festa como aguardando pagamento ou em andamento
+    }
 
-        var festa = await _repository.ObterFestaPorId(festaId);
-
-        if (festa == null)
+    public async Task<Festa> ConcluirFesta(Guid festaId)
+    {
+        Festa festa = await _repository.ObterFestaPorId(festaId) ??
             throw new DomainException("Festa inserida não foi encontrada");
 
         if (festa.Status == Enum.EStatusFesta.Cancelada || festa.Status == Enum.EStatusFesta.Finalizada)
             throw new DomainException("Não é possível finalizar uma festa já finalizada ou cancelada");
 
+        // Marca Festa como concluida.
         festa.FinalizarFesta();
+
+        // Volta ao estoque normal.
         festa.Tema?.DecrementarEstoque();
 
         await _repository.AtualizarFesta(festa!);
-    }
-
-    public async Task<ContratoLocacao> MostrarTermosDoContrato(Guid festaId)
-    {
-        var festa = await _repository.ObterFestaPorId(festaId);
-
-        if (festa == null)
-            throw new DomainException("Festa inserida não foi encontrada");
-
-        return festa.ContratoLocacao;
+        return festa;
     }
 }

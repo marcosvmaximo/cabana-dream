@@ -29,7 +29,7 @@ public class TemaMap : IEntityTypeConfiguration<Tema>
             .HasColumnType("bool")
             .HasColumnName("disponibilidade");
 
-        builder.Property(x => x.Estoque)
+        builder.Property(x => x.QuantidadeEstoque)
             .HasColumnType("int")
             .HasColumnName("quantidade_estoque");
 
