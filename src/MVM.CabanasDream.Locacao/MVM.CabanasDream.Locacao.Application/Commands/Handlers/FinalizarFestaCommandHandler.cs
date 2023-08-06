@@ -5,34 +5,36 @@ using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Core.Domain.Results;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
+using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
 
 namespace MVM.CabanasDream.Locacao.Application.Commands.Handlers;
 
 public class FinalizarFestaCommandHandler : Handler<FinalizarFestaCommand>
 {
+    private readonly ILocacaoService _locacaoService;
     private readonly IMediatrHandler _mediator;
     private readonly IFestaRepository _repository;
 
-    public FinalizarFestaCommandHandler(IFestaRepository repository, IMediatrHandler mediator)
+    public FinalizarFestaCommandHandler(IFestaRepository repository,
+                                        IMediatrHandler mediator,
+                                        ILocacaoService locacaoService)
     {
+        _locacaoService = locacaoService;
         _mediator = mediator;
         _repository = repository;
     }
 
     public override async Task<BaseResult> Handle(FinalizarFestaCommand command, CancellationToken cancellationToken)
     {
-        if (command.DataFinalizacao >= DateTime.Now)
+        if (!ValidarComando(command))
         {
-            throw new DomainException("Não é possível finalizar uma festa no futuro.");
+            return BaseResult.BadResult();
         }
 
-        var festa = await _repository.ObterFestaPorId(command.FestaId) ??
-            throw new DomainException("Festa informada não existe.");
+        var result = await _locacaoService.FinalizarFesta(command.FestaId, command.DataFinalizacao);
+        await _repository.UnityOfWork.Commit();
 
-        festa!.FinalizarFesta(command.DataFinalizacao);
-
-        await _repository.AtualizarFesta(festa);
-        return BaseResult.OkResult(festa);
+        return BaseResult.OkResult(result);
     }
 
     protected override bool ValidarComando(FinalizarFestaCommand command)

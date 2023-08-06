@@ -5,6 +5,7 @@ using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Core.Domain.Results;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
+using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
 
 namespace MVM.CabanasDream.Locacao.Application.Commands.Handlers;
 
@@ -12,21 +13,23 @@ public class CancelarFestaCommandHandler : Handler<CancelarFestaCommand>
 {
     private readonly IMediatrHandler _mediator;
     private readonly IFestaRepository _repository;
+    private readonly ILocacaoService _locacaoService;
 
-    public CancelarFestaCommandHandler(IFestaRepository repository, IMediatrHandler mediator)
+    public CancelarFestaCommandHandler(IFestaRepository repository,
+                                       IMediatrHandler mediator,
+                                       ILocacaoService locacaoService)
     {
         _mediator = mediator;
         _repository = repository;
+        _locacaoService = locacaoService;
     }
 
     public override async Task<BaseResult> Handle(CancelarFestaCommand command, CancellationToken cancellationToken)
     {
-        var festa = await _repository.ObterFestaPorId(command.FestaId) ??
-            throw new DomainException("Festa informado não foi encontrada.");
+        if (!ValidarComando(command))
+            return BaseResult.BadResult();
 
-        festa.CancelarFesta(command.DataFinalizacao, command.Motivo);
-
-        await _repository.AtualizarFesta(festa);
+        await _locacaoService.CancelarFesta(command.FestaId, command.DataFinalizacao, command.Motivo);
         await _repository.UnityOfWork.Commit();
 
         return BaseResult.OkResult(festa);

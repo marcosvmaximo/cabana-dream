@@ -39,7 +39,6 @@ public class Tema : Entity
         Assertion.ValidarSeNulo(festa, "Não é possível adicionar uma festa nula");
 
         _festas.Add(festa);
-
         DecrementarEstoque();
     }
 
@@ -53,7 +52,15 @@ public class Tema : Entity
         }
     }
 
-    public void IncrementarEstoque() => QuantidadeEstoque++;
+    public void IncrementarEstoque()
+    {
+        QuantidadeEstoque++;
+
+        if (QuantidadeEstoque >= 1)
+        {
+            Disponibilizar();
+        }
+    }
 
     public void Indisponibilizar()
     {

@@ -5,7 +5,7 @@ namespace MVM.CabanasDream.Locacao.Domain.Events;
 
 public class TemaIndisponivelEvent : DomainEvent
 {
-    public TemaIndisponivelEvent(Guid aggregateId, Guid temaId, int quantidadeEstoque) : base(aggregateId)
+    public TemaIndisponivelEvent(Guid festaId, Guid temaId, int quantidadeEstoque) : base(festaId)
     {
         TemaId = temaId;
         QuantidadeEstoque = quantidadeEstoque;

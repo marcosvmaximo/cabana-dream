@@ -2,6 +2,7 @@
 using MVM.CabanasDream.Core.Domain.Interfaces;
 using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.ContratoContext;
 using MVM.CabanasDream.Fiscal.Domain.Entities;
 
 namespace MVM.CabanasDream.Fiscal.Domain;
@@ -18,7 +19,7 @@ public class Contrato : Entity, IAggregateRoot
         Vigente = true;
 
         Validar();
-        AdicionarEvento(new ContratoCriadoEvent(Id));
+        AdicionarEvento(new ContratoCriadoEvent(Id, FestaId));
     }
 
     protected Contrato() { }
