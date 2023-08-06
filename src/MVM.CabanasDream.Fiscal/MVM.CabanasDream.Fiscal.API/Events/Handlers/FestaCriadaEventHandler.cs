@@ -3,6 +3,8 @@ using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.ContratoContext;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
 using MVM.CabanasDream.Fiscal.Application.Commands;
 using MVM.CabanasDream.Fiscal.Domain.Interfaces;
 
@@ -26,7 +28,7 @@ public class FestaCriadaEventHandler : INotificationHandler<FestaCriadaEvent>
         if (festasCanceladas.Any() && festasCanceladas.Count() >= 5)
         {
             // Enviar Evento que falhou de volta
-            await _mediator.PublicarEvento(new FalhouAnaliseClienteEvent(Guid.Empty, message.ClienteId));
+            await _mediator.PublicarEvento(new FalhouAnaliseClienteEvent(message.ClienteId));
 
             return;
         }

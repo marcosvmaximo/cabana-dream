@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Commands\" />
-    <None Remove="Commands\Handlers\" />
     <None Remove="Events\" />
     <None Remove="Events\Handlers\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Commands\Handlers\" />
     <Folder Include="Events\" />
     <Folder Include="Events\Handlers\" />
   </ItemGroup>

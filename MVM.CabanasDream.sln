@@ -43,11 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Catalogo.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Catalogo.DataAccess", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.DataAccess\MVM.CabanasDream.Catalogo.DataAccess.csproj", "{F9BE600B-EB17-4A15-813F-AD875DC718E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Fiscal.Domain", "src\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.Domain\MVM.CabanasDream.Fiscal.Domain.csproj", "{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Fiscal.Application", "src\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.Application\MVM.CabanasDream.Fiscal.Application.csproj", "{8761E50D-5950-4CBA-9E4E-225098A8DE02}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Fiscal.Data", "src\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.Data\MVM.CabanasDream.Fiscal.Data.csproj", "{CC561963-5068-40B3-BE8D-C54D4F911AD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Fiscal.API", "src\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.API\MVM.CabanasDream.Fiscal.API.csproj", "{B970CADA-CBD9-4241-8171-23AF8691EAB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,18 +91,10 @@ Global
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8761E50D-5950-4CBA-9E4E-225098A8DE02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8761E50D-5950-4CBA-9E4E-225098A8DE02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8761E50D-5950-4CBA-9E4E-225098A8DE02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8761E50D-5950-4CBA-9E4E-225098A8DE02}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC561963-5068-40B3-BE8D-C54D4F911AD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC561963-5068-40B3-BE8D-C54D4F911AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC561963-5068-40B3-BE8D-C54D4F911AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC561963-5068-40B3-BE8D-C54D4F911AD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,8 +121,6 @@ Global
 		{8A6CF450-D2CB-4085-AFBE-7347B16C29F1} = {C81154D4-6AE8-4770-B5C3-264C99880AAC}
 		{2A6DBF61-F025-456C-9FE0-8A2CE8FBC121} = {C81154D4-6AE8-4770-B5C3-264C99880AAC}
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1} = {C81154D4-6AE8-4770-B5C3-264C99880AAC}
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F} = {05DAF808-79F5-4189-8B9E-7DC98DA1D725}
-		{8761E50D-5950-4CBA-9E4E-225098A8DE02} = {05DAF808-79F5-4189-8B9E-7DC98DA1D725}
-		{CC561963-5068-40B3-BE8D-C54D4F911AD2} = {05DAF808-79F5-4189-8B9E-7DC98DA1D725}
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9} = {05DAF808-79F5-4189-8B9E-7DC98DA1D725}
 	EndGlobalSection
 EndGlobal

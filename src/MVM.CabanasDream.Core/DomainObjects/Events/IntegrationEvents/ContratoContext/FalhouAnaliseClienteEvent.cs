@@ -7,7 +7,7 @@ public class FalhouAnaliseClienteEvent : IntegrationEvent
 {
     public Guid ClienteId { get; set; }
 
-    public FalhouAnaliseClienteEvent(Guid aggregateId, Guid clienteId) : base(aggregateId)
+    public FalhouAnaliseClienteEvent(Guid clienteId) : base(Guid.Empty)
     {
         ClienteId = clienteId;
     }

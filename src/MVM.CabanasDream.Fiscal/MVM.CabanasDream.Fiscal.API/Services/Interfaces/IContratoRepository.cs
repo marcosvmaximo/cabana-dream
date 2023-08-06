@@ -1,9 +1,8 @@
-﻿using System;
-using MVM.CabanasDream.Core.Data.Interfaces;
-using MVM.CabanasDream.Core.Domain.Interfaces.Repositories;
-using MVM.CabanasDream.Fiscal.Domain.Entities;
+﻿using MVM.CabanasDream.Core.Domain.Interfaces.Repositories;
+using MVM.CabanasDream.Fiscal.API.Models;
+using MVM.CabanasDream.Fiscal.API.Models.Entities;
 
-namespace MVM.CabanasDream.Fiscal.Domain.Interfaces;
+namespace MVM.CabanasDream.Fiscal.API.Services.Interfaces;
 
 public interface IContratoRepository : IRepository<Contrato>
 {

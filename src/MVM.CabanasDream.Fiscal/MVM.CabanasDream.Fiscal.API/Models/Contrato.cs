@@ -5,7 +5,7 @@ using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.ContratoContext;
 using MVM.CabanasDream.Fiscal.Domain.Entities;
 
-namespace MVM.CabanasDream.Fiscal.Domain;
+namespace MVM.CabanasDream.Fiscal.API.Models;
 
 public class Contrato : Entity, IAggregateRoot
 {
