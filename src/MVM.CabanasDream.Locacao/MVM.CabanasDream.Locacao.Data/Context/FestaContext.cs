@@ -46,7 +46,7 @@ public class FestaContext : DbContext, IUnityOfWork
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(FestaContext).Assembly);
 
-        modelBuilder.Ignore<ItemDeFesta>();
+        modelBuilder.Ignore<ArtigoFesta>();
         modelBuilder.Ignore<Event>();
         base.OnModelCreating(modelBuilder);
     }

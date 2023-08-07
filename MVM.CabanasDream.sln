@@ -37,13 +37,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Locacao.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Core", "src\MVM.CabanasDream.Core\MVM.CabanasDream.Core.csproj", "{D021717E-1BA8-475A-BD6E-76D104FA1F51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.API", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.API\MVM.CabanasDream.API.csproj", "{8A6CF450-D2CB-4085-AFBE-7347B16C29F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Catalogo.API", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.API\MVM.CabanasDream.Catalogo.API.csproj", "{8A6CF450-D2CB-4085-AFBE-7347B16C29F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.BussinesLogic", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.BussinesLogic\MVM.CabanasDream.BussinesLogic.csproj", "{2A6DBF61-F025-456C-9FE0-8A2CE8FBC121}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Catalogo.BussinesLogic", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.BussinesLogic\MVM.CabanasDream.Catalogo.BussinesLogic.csproj", "{2A6DBF61-F025-456C-9FE0-8A2CE8FBC121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.DataAccess", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.DataAccess\MVM.CabanasDream.DataAccess.csproj", "{F9BE600B-EB17-4A15-813F-AD875DC718E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Catalogo.DataAccess", "src\MVM.CabanasDream.Catalogo\MVM.CabanasDream.Catalogo.DataAccess\MVM.CabanasDream.Catalogo.DataAccess.csproj", "{F9BE600B-EB17-4A15-813F-AD875DC718E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Fiscal.Domain", "src\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.Domain\MVM.CabanasDream.Fiscal.Domain.csproj", "{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Fiscal.API", "src\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.API\MVM.CabanasDream.Fiscal.API.csproj", "{B970CADA-CBD9-4241-8171-23AF8691EAB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Estoque.API", "MVM.CabanasDream.Estoque.API\MVM.CabanasDream.Estoque.API.csproj", "{DED78A7F-9A06-4C93-9BFD-31BCDC633DE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVM.CabanasDream.Pagamento.API", "MVM.CabanasDream.Pagamento.API\MVM.CabanasDream.Pagamento.API.csproj", "{0DF16BB3-6F04-42B7-9B14-5D3FC9F98B10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,10 +95,18 @@ Global
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED78A7F-9A06-4C93-9BFD-31BCDC633DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED78A7F-9A06-4C93-9BFD-31BCDC633DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED78A7F-9A06-4C93-9BFD-31BCDC633DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED78A7F-9A06-4C93-9BFD-31BCDC633DE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DF16BB3-6F04-42B7-9B14-5D3FC9F98B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DF16BB3-6F04-42B7-9B14-5D3FC9F98B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DF16BB3-6F04-42B7-9B14-5D3FC9F98B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DF16BB3-6F04-42B7-9B14-5D3FC9F98B10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +133,8 @@ Global
 		{8A6CF450-D2CB-4085-AFBE-7347B16C29F1} = {C81154D4-6AE8-4770-B5C3-264C99880AAC}
 		{2A6DBF61-F025-456C-9FE0-8A2CE8FBC121} = {C81154D4-6AE8-4770-B5C3-264C99880AAC}
 		{F9BE600B-EB17-4A15-813F-AD875DC718E1} = {C81154D4-6AE8-4770-B5C3-264C99880AAC}
-		{7B1E7A59-66F4-4839-A122-0D0A7B7F456F} = {05DAF808-79F5-4189-8B9E-7DC98DA1D725}
+		{B970CADA-CBD9-4241-8171-23AF8691EAB9} = {05DAF808-79F5-4189-8B9E-7DC98DA1D725}
+		{DED78A7F-9A06-4C93-9BFD-31BCDC633DE6} = {DA9A411D-8336-4F95-A39C-22EF27FCB83E}
+		{0DF16BB3-6F04-42B7-9B14-5D3FC9F98B10} = {5DE607A8-93D0-4831-9748-8D9ECC7BAF24}
 	EndGlobalSection
 EndGlobal

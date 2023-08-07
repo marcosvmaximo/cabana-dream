@@ -11,12 +11,24 @@
     <None Remove="DomainObjects\" />
     <None Remove="Comunications\" />
     <None Remove="Comunications\Interfaces\" />
+    <None Remove="DomainObjects\Events\" />
+    <None Remove="DomainObjects\Events\IntegrationEvents\" />
+    <None Remove="DomainObjects\Events\IntegrationEvents\Common\" />
+    <None Remove="DomainObjects\Events\IntegrationEvents\ContratoContext\" />
+    <None Remove="DomainObjects\Events\IntegrationEvents\FestaContext\" />
+    <None Remove="DomainObjects\Events\IntegrationEvents\PagamentoContext\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="DomainObjects\" />
     <Folder Include="Comunications\" />
     <Folder Include="Comunications\Interfaces\" />
+    <Folder Include="DomainObjects\Events\" />
+    <Folder Include="DomainObjects\Events\IntegrationEvents\" />
+    <Folder Include="DomainObjects\Events\IntegrationEvents\Common\" />
+    <Folder Include="DomainObjects\Events\IntegrationEvents\ContratoContext\" />
+    <Folder Include="DomainObjects\Events\IntegrationEvents\FestaContext\" />
+    <Folder Include="DomainObjects\Events\IntegrationEvents\PagamentoContext\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.1.0" />

@@ -34,7 +34,6 @@ public class Cliente : Entity
     public Documento Documento { get; private set; }
     public Contato Contato { get; private set; }
     public Endereco Endereco { get; private set; }
-    public IReadOnlyCollection<ContratoLocacao> Contratos { get; private set; }
     public IReadOnlyCollection<Festa> FestasRealizadas => _festasRealizadas.ToList();
 
     public IEnumerable<Festa?> ObterFestasCanceladas()
