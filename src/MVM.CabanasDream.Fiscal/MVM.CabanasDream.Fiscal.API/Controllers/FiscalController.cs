@@ -1,11 +1,12 @@
 ﻿using System;
-namespace MVM.CabanasDream.Fiscal.API.Controllers
+using Microsoft.AspNetCore.Mvc;
+
+namespace MVM.CabanasDream.Fiscal.API.Controllers;
+
+public class FiscalController : ControllerBase
 {
-    public class FiscalController
+    public FiscalController()
     {
-        public FiscalController()
-        {
-        }
     }
 }
 

@@ -15,6 +15,7 @@
     <None Remove="Queries\Dtos\" />
     <None Remove="Events\" />
     <None Remove="Events\Handlers\" />
+    <None Remove="Events\IntegracaoBaseLeitura\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
@@ -25,6 +26,7 @@
     <Folder Include="Queries\Dtos\" />
     <Folder Include="Events\" />
     <Folder Include="Events\Handlers\" />
+    <Folder Include="Events\IntegracaoBaseLeitura\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\MVM.CabanasDream.Core\MVM.CabanasDream.Core.csproj" />

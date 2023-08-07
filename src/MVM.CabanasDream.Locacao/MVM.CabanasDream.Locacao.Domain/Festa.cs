@@ -1,13 +1,10 @@
 ﻿using MVM.CabanasDream.Core.Domain.AssertionConcern;
-using MVM.CabanasDream.Core.Domain.DomainEvents.Common;
 using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Core.Domain.Interfaces;
 using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
 using MVM.CabanasDream.Locacao.Domain.Entities;
 using MVM.CabanasDream.Locacao.Domain.Enum;
-using MVM.CabanasDream.Locacao.Domain.Events;
-using MVM.CabanasDream.Locacao.Domain.Events.Festas;
 
 namespace MVM.CabanasDream.Locacao.Domain;
 public class Festa : Entity, IAggregateRoot
@@ -46,7 +43,12 @@ public class Festa : Entity, IAggregateRoot
     public DateTime DataRealizacao { get; private set; }
     public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _artigosDeFesta.ToList();
 
-    public void ConfirmarFesta() => Status = EStatusFesta.AguardandoPagamento;
+    public void ConfirmarFesta()
+    {
+        Status = EStatusFesta.AguardandoPagamento;
+
+        AdicionarEvento(new FestaAguardandoPagamentoEvent(Id));
+    }
     public void EntregarFesta() => Status = EStatusFesta.EmAndamento;
 
     public void CancelarFesta(DateTime dataFinalizacao, string motivo)
@@ -79,19 +81,6 @@ public class Festa : Entity, IAggregateRoot
     }
 
     public DateTime ObterDataDevolucao() => DataRealizacao.AddDays(2);
-
-    //public void AdicionarContrato(ContratoLocacao contrato)
-    //{
-    //    if (contrato == null)
-    //        throw new DomainException("Contrato inválido, não pode ser nulo.");
-
-    //    if (contrato.DataDevolucao <= DateTime.Now)
-    //        throw new DomainException("Contrato inválido, não deve possuir uma data de devolução menor que a data atual.");
-
-    //    ConfirmarFesta();
-    //    ContratoLocacao = contrato;
-    //    ContratoId = contrato.Id;
-    //}
 
     public override void Validar()
     {

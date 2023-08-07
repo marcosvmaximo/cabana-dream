@@ -1,11 +1,12 @@
 ﻿using System;
+using MVM.CabanasDream.Core.Domain.Interfaces;
 using MVM.CabanasDream.Core.Domain.Models;
 
-namespace MVM.CabanasDream.Fiscal.API.Models.Entities;
+namespace MVM.CabanasDream.Pagamento.API.Models;
 
-public class Cliente : Entity
+public class Pagamento : Entity, IAggregateRoot
 {
-    public Cliente()
+    public Pagamento()
     {
     }
 

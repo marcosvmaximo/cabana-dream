@@ -1,4 +1,5 @@
 ﻿using MVM.CabanasDream.Core.Comunications.Messages;
+using MVM.CabanasDream.Core.Domain.DomainEvents.Common;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
@@ -70,7 +71,7 @@ public class LocacaoService : ILocacaoService
         return _repository.ObterClientePorId(clienteId).Result ?? throw new DomainException("Cliente não encontrado");
     }
 
-    public async Task<Festa> CancelarFesta(Guid festaId)
+    public async Task<Festa> CancelarFesta(Guid festaId, DateTime dataFinalizacao, string motivo)
     {
         Festa festa = await _repository.ObterFestaPorId(festaId) ??
             throw new DomainException("Festa inserida não foi encontrada");
@@ -82,10 +83,10 @@ public class LocacaoService : ILocacaoService
             throw new DomainException("Não é possível cancelar uma festa já cancelada ou finalizada");
 
         // Marca festa do cliente como cancelada
-        festa.CancelarFesta();
+        festa.CancelarFesta(dataFinalizacao, motivo);
 
         // Volta ao estoque normal.
-        festa.Tema?.DecrementarEstoque();
+        festa.Tema?.IncrementarEstoque();
 
         await _repository.AtualizarFesta(festa);
         return festa;
@@ -93,7 +94,13 @@ public class LocacaoService : ILocacaoService
 
     public async Task<Festa> FecharContratoFesta(Guid festaId)
     {
-        // recebe o evento e marca festa como aguardando pagamento ou em andamento
+        Festa festa = await _repository.ObterFestaPorId(festaId)
+            ?? throw new DomainException("Festa inserida é inválida");
+
+        festa.ConfirmarFesta();
+
+        await _repository.AtualizarFesta(festa);
+        return festa;
     }
 
     public async Task<Festa> FinalizarFesta(Guid festaId, DateTime dataFinalizacao)
@@ -108,7 +115,7 @@ public class LocacaoService : ILocacaoService
         festa.FinalizarFesta(dataFinalizacao);
 
         // Volta ao estoque normal.
-        festa.Tema?.DecrementarEstoque();
+        festa.Tema?.IncrementarEstoque();
 
         await _repository.AtualizarFesta(festa!);
         return festa;

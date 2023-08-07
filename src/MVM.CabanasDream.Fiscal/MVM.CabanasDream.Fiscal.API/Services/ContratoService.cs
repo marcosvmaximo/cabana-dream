@@ -1,7 +1,4 @@
-﻿using System;
-using MVM.CabanasDream.Core.Domain.DomainEvents;
-using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.Domain.Results;
+﻿using MVM.CabanasDream.Core.Domain.Exceptions;
 using MVM.CabanasDream.Fiscal.API.Models;
 using MVM.CabanasDream.Fiscal.API.Models.Entities;
 using MVM.CabanasDream.Fiscal.API.Services.Interfaces;

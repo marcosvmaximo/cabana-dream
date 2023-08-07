@@ -1,22 +1,20 @@
 ﻿using MediatR;
-using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
-using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.ContratoContext;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
-using MVM.CabanasDream.Fiscal.Application.Commands;
-using MVM.CabanasDream.Fiscal.Domain.Interfaces;
+using MVM.CabanasDream.Fiscal.API.Services.Interfaces;
 
-namespace MVM.CabanasDream.Fiscal.Application.Events.Handlers;
+namespace MVM.CabanasDream.Fiscal.API.Events.Handlers;
 
 public class FestaCriadaEventHandler : INotificationHandler<FestaCriadaEvent>
 {
+    private readonly IContratoService _service;
     private readonly IContratoRepository _repository;
     private readonly IMediatrHandler _mediator;
 
-    public FestaCriadaEventHandler(IContratoRepository repository, IMediatrHandler mediator)
+    public FestaCriadaEventHandler(IContratoRepository repository, IMediatrHandler mediator, IContratoService service)
     {
+        _service = service;
         _repository = repository;
         _mediator = mediator;
     }
@@ -33,8 +31,7 @@ public class FestaCriadaEventHandler : INotificationHandler<FestaCriadaEvent>
             return;
         }
 
-        var command = new CriarContratoCommand(message.FestaId, message.ClienteId, message.DataDevolucao);
-        await _mediator.EnviarComando(command);
+        await _service.CriarContrato(message.FestaId, message.ClienteId, message.DataDevolucao);
     }
 }
 
