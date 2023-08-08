@@ -29,14 +29,6 @@ public class ClienteMap : IEntityTypeConfiguration<Cliente>
             .HasColumnType("date")
             .HasColumnName("data_nascimento");
 
-        builder.HasMany(x => x.Contratos)
-            .WithOne(x => x.Cliente)
-            .HasForeignKey(x => x.ClienteId);
-
-        builder.HasMany(x => x.FestasRealizadas)
-            .WithOne(x => x.Cliente)
-            .HasForeignKey(x => x.ClienteId);
-
         builder.OwnsOne(x => x.Contato, c =>
         {
             c.Property(x => x.Ddd)
@@ -93,6 +85,11 @@ public class ClienteMap : IEntityTypeConfiguration<Cliente>
                 .HasColumnType("int")
                 .HasColumnName("tipo_documento");
         });
+
+
+        builder.HasMany(x => x.Festas)
+            .WithOne(x => x.Cliente)
+            .HasForeignKey(x => x.ClienteId);
     }
 }
 

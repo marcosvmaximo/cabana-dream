@@ -1,7 +1,6 @@
 ﻿using MVM.CabanasDream.Core.Domain.AssertionConcern;
 using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Locacao.Domain.Events;
-using MVM.CabanasDream.Locacao.Domain.Events.Temas;
 
 namespace MVM.CabanasDream.Locacao.Domain.Entities;
 
@@ -24,8 +23,8 @@ public class Tema : Entity
     public string Nome { get; private set; }
     public int QuantidadeEstoque { get; private set; }
     public bool Disponivel { get; private set; }
-    public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _itensDeFesta.ToList();
     public IReadOnlyCollection<Festa> Festas => _festas.ToList();
+    public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _itensDeFesta.ToList();
 
     public bool VerificarDisponibilidade()
     {

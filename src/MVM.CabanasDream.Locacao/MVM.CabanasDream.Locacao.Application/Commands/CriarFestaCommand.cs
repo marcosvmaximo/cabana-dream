@@ -5,6 +5,10 @@ namespace MVM.CabanasDream.Locacao.Application.Commands;
 
 public class CriarFestaCommand : Command
 {
+    public CriarFestaCommand()
+    {
+    }
+
     public CriarFestaCommand(Guid clienteId, Guid temaId, int quantidadeParticipantes, DateTime dataRealizacao, List<ArtigoDeFestaCommand?> itemsExtras)
     {
         ClienteId = clienteId;
@@ -12,10 +16,6 @@ public class CriarFestaCommand : Command
         QuantidadeParticipantes = quantidadeParticipantes;
         DataRealizacao = dataRealizacao;
         ArtigosDeFesta = itemsExtras;
-    }
-
-    public CriarFestaCommand()
-    {
     }
 
     public Guid ClienteId { get; set; }

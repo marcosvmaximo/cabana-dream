@@ -39,8 +39,8 @@ public class Festa : Entity, IAggregateRoot
     public Guid ClienteId { get; private set; }
     public int QuantidadeParticipantes { get; private set; }
     public EStatusFesta Status { get; private set; }
-    public Guid? ContratoId { get; private set; }
     public DateTime DataRealizacao { get; private set; }
+    public Guid? ContratoId { get; private set; }
     public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _artigosDeFesta.ToList();
 
     public void ConfirmarFesta()

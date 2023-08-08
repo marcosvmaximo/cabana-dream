@@ -21,22 +21,6 @@ public class FestaMap : IEntityTypeConfiguration<Festa>
             .HasColumnType("timestamp")
             .HasColumnName("data_criacao");
 
-        builder.HasOne(x => x.ContratoLocacao)
-            .WithOne(x => x.Festa)
-            .HasForeignKey<Festa>(x => x.ContratoId);
-
-        builder.Property(x => x.ContratoId)
-            .HasColumnType("uuid")
-            .HasColumnName("contrato_locacao_id");
-
-        builder.HasOne(x => x.Cliente)
-            .WithMany(x => x.FestasRealizadas)
-            .HasForeignKey(x => x.ClienteId);
-
-        builder.Property(x => x.ClienteId)
-            .HasColumnType("uuid")
-            .HasColumnName("cliente_id");
-
         builder.HasOne(x => x.Tema)
             .WithMany(x => x.Festas)
             .HasForeignKey(x => x.TemaId);
@@ -44,6 +28,14 @@ public class FestaMap : IEntityTypeConfiguration<Festa>
         builder.Property(x => x.TemaId)
             .HasColumnType("uuid")
             .HasColumnName("tema_id");
+
+        builder.HasOne(x => x.Cliente)
+            .WithMany(x => x.Festas)
+            .HasForeignKey(x => x.ClienteId);
+
+        builder.Property(x => x.ClienteId)
+            .HasColumnType("uuid")
+            .HasColumnName("cliente_id");
 
         builder.Property(x => x.QuantidadeParticipantes)
             .HasColumnType("int")
@@ -56,6 +48,14 @@ public class FestaMap : IEntityTypeConfiguration<Festa>
         builder.Property(x => x.DataRealizacao)
             .HasColumnType("date")
             .HasColumnName("data_realizacao_festa");
+
+        builder.Property(x => x.ContratoId)
+            .HasColumnType("uuid")
+            .HasColumnName("data_realizacao_festa");
+
+        builder.HasMany(x => x.ArtigosDeFesta)
+            .WithOne(x => x.Festa)
+            .HasForeignKey(x => x.FestaId);
     }
 }
 

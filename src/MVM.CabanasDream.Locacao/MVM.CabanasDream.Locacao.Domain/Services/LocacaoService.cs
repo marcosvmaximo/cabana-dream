@@ -1,11 +1,8 @@
 ﻿using MVM.CabanasDream.Core.Comunications.Messages;
-using MVM.CabanasDream.Core.Domain.DomainEvents.Common;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
 using MVM.CabanasDream.Locacao.Domain.Entities;
-using MVM.CabanasDream.Locacao.Domain.Events.Festas;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
 using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
 

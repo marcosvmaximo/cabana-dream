@@ -1,11 +1,18 @@
 ﻿using System;
-namespace MVM.CabanasDream.Locacao.Application.Events.Handlers
+using MediatR;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.ContratoContext;
+
+namespace MVM.CabanasDream.Locacao.Application.Events.Handlers;
+
+public class FalhouAnaliseClienteEventHandler : INotificationHandler<FalhouAnaliseClienteEvent>
 {
-    public class FalhouAnaliseClienteEventHandler
+    public FalhouAnaliseClienteEventHandler()
     {
-        public FalhouAnaliseClienteEventHandler()
-        {
-        }
+    }
+
+    public Task Handle(FalhouAnaliseClienteEvent notification, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }
 
