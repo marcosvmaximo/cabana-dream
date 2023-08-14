@@ -1,9 +1,7 @@
-﻿using System;
-using MVM.CabanasDream.Core.Comunications.Messages;
+﻿using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
-using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.Domain.Results;
+using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
 using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
 
@@ -12,11 +10,11 @@ namespace MVM.CabanasDream.Locacao.Application.Commands.Handlers;
 public class FinalizarFestaCommandHandler : Handler<FinalizarFestaCommand>
 {
     private readonly ILocacaoService _locacaoService;
-    private readonly IMediatrHandler _mediator;
+    private readonly IMediatorHandler _mediator;
     private readonly IFestaRepository _repository;
 
     public FinalizarFestaCommandHandler(IFestaRepository repository,
-                                        IMediatrHandler mediator,
+                                        IMediatorHandler mediator,
                                         ILocacaoService locacaoService)
     {
         _locacaoService = locacaoService;
@@ -31,7 +29,7 @@ public class FinalizarFestaCommandHandler : Handler<FinalizarFestaCommand>
             return BaseResult.BadResult();
         }
 
-        var result = await _locacaoService.FinalizarFesta(command.FestaId, command.DataFinalizacao);
+        var result = await _locacaoService.CompletarFesta(command.FestaId, command.DataFinalizacao);
         await _repository.UnityOfWork.Commit();
 
         return BaseResult.OkResult(result);

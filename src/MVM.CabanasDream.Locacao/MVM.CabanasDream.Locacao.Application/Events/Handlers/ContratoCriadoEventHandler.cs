@@ -22,7 +22,7 @@ public class ContratoCriadoEventHandler : INotificationHandler<ContratoCriadoEve
 
     public async Task Handle(ContratoCriadoEvent message, CancellationToken cancellationToken)
     {
-        await _service.FecharContratoFesta(message.FestaId);
+        await _service.ConfirmarFesta(message.FestaId);
 
         await _repository.UnityOfWork.Commit();
     }

@@ -1,8 +1,8 @@
 ﻿using MVM.CabanasDream.Core.Domain.AssertionConcern;
 using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.Domain.Interfaces;
 using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext;
+using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.FestaContext.Enum;
 using MVM.CabanasDream.Locacao.Domain.Entities;
 using MVM.CabanasDream.Locacao.Domain.Enum;
 
@@ -33,15 +33,17 @@ public class Festa : Entity, IAggregateRoot
         Validar();
     }
 
-    public Tema Tema { get; private set; }
     public Guid TemaId { get; private set; }
-    public Cliente Cliente { get; private set; }
     public Guid ClienteId { get; private set; }
     public int QuantidadeParticipantes { get; private set; }
     public EStatusFesta Status { get; private set; }
     public DateTime DataRealizacao { get; private set; }
+    public DateTime DataFinalizacao { get; private set; }
     public Guid? ContratoId { get; private set; }
     public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _artigosDeFesta.ToList();
+
+    public Tema Tema { get; private set; }
+    public Cliente Cliente { get; private set; }
 
     public void ConfirmarFesta()
     {
@@ -49,9 +51,15 @@ public class Festa : Entity, IAggregateRoot
 
         AdicionarEvento(new FestaAguardandoPagamentoEvent(Id));
     }
-    public void EntregarFesta() => Status = EStatusFesta.EmAndamento;
 
-    public void CancelarFesta(DateTime dataFinalizacao, string motivo)
+    public void EntregarFesta()
+    {
+        DataFinalizacao = DateTime.Now;
+
+        Status = EStatusFesta.EmAndamento;
+    }
+
+    public void CancelarFesta(DateTime dataFinalizacao, EMotivoCancelamento motivo)
     {
         if (Status == EStatusFesta.Cancelada || Status == EStatusFesta.Finalizada)
             throw new DomainException("Não é possível cancelar uma festa já cancelada ou finalizada");
@@ -87,8 +95,8 @@ public class Festa : Entity, IAggregateRoot
         if (!Tema.VerificarDisponibilidade())
             throw new DomainException("Tema sem estoque disponivel.");
 
-        Assertion.ValidarSeNulo(Tema, "O campo {0} não deve ser nulo ou vazio");
-        Assertion.ValidarSeNulo(Cliente, "O campo {0} não deve ser nulo ou vazio");
+        Assertion.ValidarSeNulo(Tema, "O campo Tema não deve ser nulo ou vazio");
+        Assertion.ValidarSeNulo(Cliente, "O campo Cliente não deve ser nulo ou vazio");
         Assertion.ValidarSeNulo(Status, "O campo {0} não deve ser nulo ou vazio");
         Assertion.ValidarSeMenorQue(QuantidadeParticipantes, 1, "A quantidade de participante não deve ser menor que 1 participante.");
         Assertion.ValidarSeVerdadeiro(DataRealizacao <= DateTime.Now, "O campo {0} não pode ser menor que a data atual");

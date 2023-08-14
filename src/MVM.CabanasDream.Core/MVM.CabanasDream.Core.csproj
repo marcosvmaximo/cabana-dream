@@ -17,6 +17,8 @@
     <None Remove="DomainObjects\Events\IntegrationEvents\ContratoContext\" />
     <None Remove="DomainObjects\Events\IntegrationEvents\FestaContext\" />
     <None Remove="DomainObjects\Events\IntegrationEvents\PagamentoContext\" />
+    <None Remove="DomainObjects\Events\IntegrationEvents\FestaContext\Enum\" />
+    <None Remove="DomainObjects\Models\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -29,9 +31,15 @@
     <Folder Include="DomainObjects\Events\IntegrationEvents\ContratoContext\" />
     <Folder Include="DomainObjects\Events\IntegrationEvents\FestaContext\" />
     <Folder Include="DomainObjects\Events\IntegrationEvents\PagamentoContext\" />
+    <Folder Include="DomainObjects\Events\IntegrationEvents\FestaContext\Enum\" />
+    <Folder Include="DomainObjects\Models\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.1.0" />
     <PackageReference Include="FluentValidation" Version="11.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.20">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

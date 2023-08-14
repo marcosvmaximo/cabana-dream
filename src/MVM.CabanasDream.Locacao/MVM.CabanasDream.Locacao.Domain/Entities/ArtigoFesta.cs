@@ -19,8 +19,8 @@ public class ArtigoFesta : Entity
     public string Nome { get; private set; }
     public decimal Valor { get; private set; }
     public int Quantidade { get; private set; }
-    public Guid FestaId { get; private set; }
-    public Guid TemaId { get; private set; }
+    public Guid? FestaId { get; private set; }
+    public Guid? TemaId { get; private set; }
 
     // Ef Rel..
     public Festa Festa { get; private set; }

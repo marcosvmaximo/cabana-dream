@@ -49,9 +49,13 @@ public class FestaMap : IEntityTypeConfiguration<Festa>
             .HasColumnType("date")
             .HasColumnName("data_realizacao_festa");
 
+        builder.Property(x => x.DataFinalizacao)
+            .HasColumnType("date")
+            .HasColumnName("data_finalizacao_festa");
+
         builder.Property(x => x.ContratoId)
             .HasColumnType("uuid")
-            .HasColumnName("data_realizacao_festa");
+            .HasColumnName("contrato_id");
 
         builder.HasMany(x => x.ArtigosDeFesta)
             .WithOne(x => x.Festa)

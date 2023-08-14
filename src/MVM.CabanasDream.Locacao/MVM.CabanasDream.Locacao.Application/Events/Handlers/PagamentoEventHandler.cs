@@ -1,25 +1,29 @@
 ﻿using System;
 using MediatR;
 using MVM.CabanasDream.Core.DomainObjects.Events.IntegrationEvents.PagamentoContext;
+using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
 
 namespace MVM.CabanasDream.Locacao.Application.Events.Handlers;
 
 public class PagamentoEventHandler :
-    INotificationHandler<PagamentoConcluidoEvent>,
-    INotificationHandler<PagamentoFalhadoEvent>
+    INotificationHandler<PagamentoRealizadoEvent>,
+    INotificationHandler<PagamentoRecusadoEvent>
 {
-    public PagamentoEventHandler()
+    private readonly ILocacaoService _service;
+
+    public PagamentoEventHandler(ILocacaoService service)
     {
+        _service = service;
     }
 
-    public Task Handle(PagamentoFalhadoEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(PagamentoRealizadoEvent message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        //await _service.ConfirmarPagamentoFesta();
     }
 
-    public Task Handle(PagamentoConcluidoEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(PagamentoRecusadoEvent message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        //await _service.CancelarFesta();
     }
 }
 

@@ -33,9 +33,13 @@ public class FestaRepository : IFestaRepository
     {
         var cliente = await _context.Clientes.AsTracking().FirstOrDefaultAsync(x => x.Id == clienteId);
 
-        await _context.Entry(cliente)
-            .Collection(f => f.Festas)
-            .LoadAsync();
+        if (cliente != null)
+        {
+            await _context
+                .Entry(cliente)
+                .Collection(f => f.Festas)
+                .LoadAsync();
+        }
 
         return cliente;
     }
@@ -44,33 +48,46 @@ public class FestaRepository : IFestaRepository
     {
         var festa = await _context.Festas.FirstOrDefaultAsync(x => x.Id == festaId);
 
-        await _context.Entry(festa)
-            .Reference(f => f.Tema)
-            .LoadAsync();
+        if (festa != null)
+        {
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Tema)
+                .LoadAsync();
 
-        await _context.Entry(festa)
-            .Collection(f => f.ArtigosDeFesta)
-            .LoadAsync();
+            await _context
+                .Entry(festa)
+                .Collection(f => f.ArtigosDeFesta)
+                .LoadAsync();
 
-        await _context.Entry(festa)
-            .Reference(f => f.Cliente)
-            .LoadAsync();
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Cliente)
+                .LoadAsync();
+        }
 
         return festa;
     }
 
     public async Task<Tema?> ObterTemaPorId(Guid temaId)
     {
-        var tema = await _context.Temas.FirstOrDefaultAsync(x => x.Id == temaId);
+        var tema = await _context.Temas
+            .Include(x => x.Festas)
+            .Include(x => x.ArtigosFestas)
+            .FirstOrDefaultAsync(x => x.Id == temaId);
 
+        //if (tema != null)
+        //{
+        //    await _context
+        //        .Entry(tema)
+        //        .Collection(f => f.ArtigosDeFesta)
+        //        .LoadAsync();
 
-        await _context.Entry(tema)
-            .Collection(f => f.ArtigosDeFesta)
-            .LoadAsync();
-
-        await _context.Entry(tema)
-            .Collection(f => f.Festas)
-            .LoadAsync();
+        //    await _context
+        //        .Entry(tema)
+        //        .Collection(f => f.Festas)
+        //        .LoadAsync();
+        //}
 
         return tema;
     }
@@ -79,24 +96,31 @@ public class FestaRepository : IFestaRepository
     {
         var festa = await _context.Festas.FirstOrDefaultAsync(x => x.ClienteId == clienteId);
 
-        await _context.Entry(festa)
-            .Reference(f => f.Tema)
-            .LoadAsync();
+        if (festa != null)
+        {
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Tema)
+                .LoadAsync();
 
-        await _context.Entry(festa)
-            .Collection(f => f.ArtigosDeFesta)
-            .LoadAsync();
+            await _context
+                .Entry(festa)
+                .Collection(f => f.ArtigosDeFesta)
+                .LoadAsync();
 
-        await _context.Entry(festa)
-            .Reference(f => f.Cliente)
-            .LoadAsync();
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Cliente)
+                .LoadAsync();
+        }
 
         return festa;
     }
 
-    public async Task<IEnumerable<Festa?>> ObterFestasPorCliente(Guid clienteId)
+    public async Task<IEnumerable<Festa>> ObterFestasPorCliente(Guid clienteId)
     {
         var festas = _context.Festas
+                        .Include(x => x.ArtigosDeFesta)
                         .Where(x => x.ClienteId == clienteId)
                         .ToList();
 
@@ -108,10 +132,6 @@ public class FestaRepository : IFestaRepository
 
             await _context.Entry(festa)
                           .Reference(f => f.Cliente)
-                          .LoadAsync();
-
-            await _context.Entry(festa)
-                          .Collection(f => f.ArtigosDeFesta)
                           .LoadAsync();
         }
 

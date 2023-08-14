@@ -37,7 +37,7 @@ public class TemaMap : IEntityTypeConfiguration<Tema>
             .WithOne(x => x.Tema)
             .HasForeignKey(x => x.TemaId);
 
-        builder.HasMany(x => x.ArtigosDeFesta)
+        builder.HasMany(x => x.ArtigosFestas)
             .WithOne(x => x.Tema)
             .HasForeignKey(x => x.TemaId);
     }

@@ -1,18 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MVM.CabanasDream.Core;
 using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Data.Interfaces;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Common;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
 using MVM.CabanasDream.Locacao.Domain;
 using MVM.CabanasDream.Locacao.Domain.Entities;
+using MVM.CabanasDream.Core.Data;
+using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers;
 
 namespace MVM.CabanasDream.Locacao.Data.Context;
 
 public class FestaContext : DbContext, IUnityOfWork
 {
-    private readonly IMediatrHandler _mediator;
+    private readonly IMediatorHandler _mediator;
 
-    public FestaContext(DbContextOptions<FestaContext> opt, IMediatrHandler mediator) : base(opt)
+    public FestaContext(DbContextOptions<FestaContext> opt, IMediatorHandler mediator) : base(opt)
     {
         _mediator = mediator;
     }
@@ -33,7 +36,8 @@ public class FestaContext : DbContext, IUnityOfWork
         }
         else
         {
-            await _mediator.PublicarNotificacao(new DomainNotification("Evento", "Falha ao salvar a entidade, eventos não foram enviados."));
+            await _mediator.PublicarNotificacao(
+                new DomainNotification("Evento", "Falha ao salvar a entidade, eventos não foram enviados."));
         }
 
         return result;

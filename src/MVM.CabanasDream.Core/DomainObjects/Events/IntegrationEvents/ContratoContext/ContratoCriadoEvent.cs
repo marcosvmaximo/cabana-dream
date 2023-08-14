@@ -7,7 +7,7 @@ public class ContratoCriadoEvent : IntegrationEvent
 {
     public Guid FestaId { get; private set; }
 
-    public ContratoCriadoEvent(Guid aggregateId, Guid festaId) : base(aggregateId)
+    public ContratoCriadoEvent(Guid contratoId, Guid festaId) : base(contratoId)
     {
         FestaId = festaId;
     }
