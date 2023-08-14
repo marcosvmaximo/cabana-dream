@@ -31,27 +31,121 @@ public class FestaRepository : IFestaRepository
 
     public async Task<Cliente?> ObterClientePorId(Guid clienteId)
     {
-        return await _context.Clientes.AsTracking().FirstOrDefaultAsync(x => x.Id == clienteId);
+        var cliente = await _context.Clientes.AsTracking().FirstOrDefaultAsync(x => x.Id == clienteId);
+
+        if (cliente != null)
+        {
+            await _context
+                .Entry(cliente)
+                .Collection(f => f.Festas)
+                .LoadAsync();
+        }
+
+        return cliente;
     }
 
     public async Task<Festa?> ObterFestaPorId(Guid festaId)
     {
-        return await _context.Festas.FirstOrDefaultAsync(x => x.Id == festaId);
+        var festa = await _context.Festas.FirstOrDefaultAsync(x => x.Id == festaId);
+
+        if (festa != null)
+        {
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Tema)
+                .LoadAsync();
+
+            await _context
+                .Entry(festa)
+                .Collection(f => f.ArtigosDeFesta)
+                .LoadAsync();
+
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Cliente)
+                .LoadAsync();
+        }
+
+        return festa;
     }
 
     public async Task<Tema?> ObterTemaPorId(Guid temaId)
     {
-        return await _context.Temas.FirstOrDefaultAsync(x => x.Id == temaId);
+        var tema = await _context.Temas
+            .Include(x => x.Festas)
+            .Include(x => x.ArtigosFestas)
+            .FirstOrDefaultAsync(x => x.Id == temaId);
+
+        //if (tema != null)
+        //{
+        //    await _context
+        //        .Entry(tema)
+        //        .Collection(f => f.ArtigosDeFesta)
+        //        .LoadAsync();
+
+        //    await _context
+        //        .Entry(tema)
+        //        .Collection(f => f.Festas)
+        //        .LoadAsync();
+        //}
+
+        return tema;
+    }
+
+    public async Task<Festa?> ObterFestasPendentesPorCliente(Guid clienteId)
+    {
+        var festa = await _context.Festas.FirstOrDefaultAsync(x => x.ClienteId == clienteId);
+
+        if (festa != null)
+        {
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Tema)
+                .LoadAsync();
+
+            await _context
+                .Entry(festa)
+                .Collection(f => f.ArtigosDeFesta)
+                .LoadAsync();
+
+            await _context
+                .Entry(festa)
+                .Reference(f => f.Cliente)
+                .LoadAsync();
+        }
+
+        return festa;
+    }
+
+    public async Task<IEnumerable<Festa>> ObterFestasPorCliente(Guid clienteId)
+    {
+        var festas = _context.Festas
+                        .Include(x => x.ArtigosDeFesta)
+                        .Where(x => x.ClienteId == clienteId)
+                        .ToList();
+
+        foreach (var festa in festas)
+        {
+            await _context.Entry(festa)
+                          .Reference(f => f.Tema)
+                          .LoadAsync();
+
+            await _context.Entry(festa)
+                          .Reference(f => f.Cliente)
+                          .LoadAsync();
+        }
+
+        return festas;
+    }
+
+    public async Task<IEnumerable<ArtigoFesta?>> ObterTodosArtigosDeFesta()
+    {
+        return await _context.ArtigosDeFestas.AsNoTracking().ToListAsync();
     }
 
     public void Dispose()
     {
         _context.Dispose();
-    }
-
-    public async Task<Festa?> ObterFestasPendentesPorCliente(Guid clienteId)
-    {
-        return await _context.Festas.FirstOrDefaultAsync(x => x.ClienteId == clienteId);
     }
 }
 

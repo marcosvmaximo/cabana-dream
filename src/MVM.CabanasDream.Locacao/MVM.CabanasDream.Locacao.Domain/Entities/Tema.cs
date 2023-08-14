@@ -1,31 +1,46 @@
 ﻿using MVM.CabanasDream.Core.Domain.AssertionConcern;
 using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Locacao.Domain.Events;
-using MVM.CabanasDream.Locacao.Domain.Events.Temas;
 
 namespace MVM.CabanasDream.Locacao.Domain.Entities;
 
 public class Tema : Entity
 {
-    private readonly IList<ArtigoFesta> _itensDeFesta;
-    private readonly IList<Festa> _festas;
+    private readonly List<ArtigoFesta> _artigosFestas;
+    private readonly List<Festa> _festas;
 
     public Tema(string nome, int estoque)
     {
         Nome = nome;
         QuantidadeEstoque = estoque;
         Disponivel = true;
-        _itensDeFesta = new List<ArtigoFesta>();
+        _artigosFestas = new List<ArtigoFesta>();
         _festas = new List<Festa>();
 
         Validar();
     }
 
+    protected Tema() { }
+
     public string Nome { get; private set; }
     public int QuantidadeEstoque { get; private set; }
     public bool Disponivel { get; private set; }
-    public IReadOnlyCollection<ArtigoFesta> ArtigosDeFesta => _itensDeFesta.ToList();
     public IReadOnlyCollection<Festa> Festas => _festas.ToList();
+    public IReadOnlyCollection<ArtigoFesta> ArtigosFestas => _artigosFestas.ToList();
+
+    protected void AdicionarArtigoFesta(ArtigoFesta artigo)
+    {
+        Assertion.ValidarSeNulo(artigo, "Não é possível adicionar um artigo de festa nulo");
+
+        _artigosFestas.Add(artigo);
+    }
+
+    public void RemoverArtigoFesta(ArtigoFesta artigo)
+    {
+        Assertion.ValidarSeNulo(artigo, "Não é possível remover um artigo de festa nulo");
+
+        _artigosFestas.Remove(artigo);
+    }
 
     public bool VerificarDisponibilidade()
     {

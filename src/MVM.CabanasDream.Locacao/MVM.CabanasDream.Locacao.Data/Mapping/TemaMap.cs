@@ -25,19 +25,21 @@ public class TemaMap : IEntityTypeConfiguration<Tema>
             .HasColumnType("varchar(255)")
             .HasColumnName("nome");
 
-        builder.Property(x => x.Disponivel)
-            .HasColumnType("bool")
-            .HasColumnName("disponibilidade");
-
         builder.Property(x => x.QuantidadeEstoque)
             .HasColumnType("int")
             .HasColumnName("quantidade_estoque");
+
+        builder.Property(x => x.Disponivel)
+            .HasColumnType("bool")
+            .HasColumnName("disponibilidade");
 
         builder.HasMany(x => x.Festas)
             .WithOne(x => x.Tema)
             .HasForeignKey(x => x.TemaId);
 
-        //builder.HasMany(x => x.ItensDeFestas)
+        builder.HasMany(x => x.ArtigosFestas)
+            .WithOne(x => x.Tema)
+            .HasForeignKey(x => x.TemaId);
     }
 }
 

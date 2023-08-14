@@ -1,9 +1,7 @@
-﻿using System;
-using MVM.CabanasDream.Core.Comunications.Messages;
+﻿using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
-using MVM.CabanasDream.Core.Domain.Exceptions;
-using MVM.CabanasDream.Core.Domain.Results;
+using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
 using MVM.CabanasDream.Locacao.Domain.Services.Interfaces;
 
@@ -11,12 +9,12 @@ namespace MVM.CabanasDream.Locacao.Application.Commands.Handlers;
 
 public class CancelarFestaCommandHandler : Handler<CancelarFestaCommand>
 {
-    private readonly IMediatrHandler _mediator;
+    private readonly IMediatorHandler _mediator;
     private readonly IFestaRepository _repository;
     private readonly ILocacaoService _locacaoService;
 
     public CancelarFestaCommandHandler(IFestaRepository repository,
-                                       IMediatrHandler mediator,
+                                       IMediatorHandler mediator,
                                        ILocacaoService locacaoService)
     {
         _mediator = mediator;
@@ -32,7 +30,7 @@ public class CancelarFestaCommandHandler : Handler<CancelarFestaCommand>
         await _locacaoService.CancelarFesta(command.FestaId, command.DataFinalizacao, command.Motivo);
         await _repository.UnityOfWork.Commit();
 
-        return BaseResult.OkResult(festa);
+        return BaseResult.OkResult(null);
     }
 
     protected override bool ValidarComando(CancelarFestaCommand command)

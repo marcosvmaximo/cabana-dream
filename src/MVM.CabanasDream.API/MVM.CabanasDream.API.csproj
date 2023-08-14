@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>80e4c66f-545b-4183-b4dc-cef94e3d4dea</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MVM.CabanasDream.Locacao.API' " />
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Npgsql" Version="6.0.9" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="Middlewares\" />
+    <None Remove="Properties\" />
+    <None Remove="Setup\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middlewares\" />
+    <Folder Include="Properties\" />
+    <Folder Include="Setup\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\MVM.CabanasDream.Core\MVM.CabanasDream.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\MVM.CabanasDream.Locacao\MVM.CabanasDream.Locacao.DependencyInjection\MVM.CabanasDream.Locacao.DependencyInjection.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\MVM.CabanasDream.Fiscal\MVM.CabanasDream.Fiscal.Bussines\MVM.CabanasDream.Fiscal.Bussines.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\MVM.CabanasDream.Estoque\MVM.CabanasDream.Estoque.Bussines\MVM.CabanasDream.Estoque.Bussines.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\MVM.CabanasDream.Pagamento\MVM.CabanasDream.Pagamento.Bussines\MVM.CabanasDream.Pagamento.Bussines.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

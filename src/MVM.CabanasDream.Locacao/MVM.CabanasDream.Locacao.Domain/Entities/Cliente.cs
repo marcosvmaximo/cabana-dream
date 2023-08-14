@@ -8,7 +8,7 @@ namespace MVM.CabanasDream.Locacao.Domain.Entities;
 
 public class Cliente : Entity
 {
-    private readonly IList<Festa> _festasRealizadas;
+    private readonly IList<Festa> _festas;
 
     protected Cliente() { }
 
@@ -24,7 +24,7 @@ public class Cliente : Entity
         Documento = documento;
         Contato = contato;
         Endereco = endereco;
-        _festasRealizadas = new List<Festa>();
+        _festas = new List<Festa>();
 
         Validar();
     }
@@ -34,21 +34,21 @@ public class Cliente : Entity
     public Documento Documento { get; private set; }
     public Contato Contato { get; private set; }
     public Endereco Endereco { get; private set; }
-    public IReadOnlyCollection<Festa> FestasRealizadas => _festasRealizadas.ToList();
+    public IReadOnlyCollection<Festa> Festas => _festas.ToList();
 
     public IEnumerable<Festa?> ObterFestasCanceladas()
     {
-        return _festasRealizadas.Where(x => x.Status == Enum.EStatusFesta.Cancelada);
+        return _festas.Where(x => x.Status == Enum.EStatusFesta.Cancelada);
     }
 
-    public void AdicionarFestaRealizada(Festa festa)
+    public void AdicionarFesta(Festa festa)
     {
         Assertion.ValidarSeNulo(festa, "Festa inválida, não deve ser nula.");
 
-        if (festa.Status != Enum.EStatusFesta.Finalizada)
-            throw new DomainException("Festa ainda não foi finalizada.");
+        if (festa.Status == Enum.EStatusFesta.Cancelada)
+            throw new DomainException("Não é possível adicionar uma festa cancelada.");
 
-        _festasRealizadas.Add(festa);
+        _festas.Add(festa);
     }
 
     public override void Validar()

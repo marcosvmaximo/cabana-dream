@@ -1,7 +1,7 @@
 ﻿using MVM.CabanasDream.Core.Comunications.Messages;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers;
 using MVM.CabanasDream.Core.Domain.DomainEvents.Handlers.Interfaces;
-using MVM.CabanasDream.Core.Domain.Results;
+using MVM.CabanasDream.Core.Domain.Models;
 using MVM.CabanasDream.Locacao.Application.Commands;
 using MVM.CabanasDream.Locacao.Domain.Entities;
 using MVM.CabanasDream.Locacao.Domain.Repositories;
@@ -10,12 +10,12 @@ namespace MVM.CabanasDream.Locacao.Application.Handlers;
 
 public class CriarFestaCommandHandler : Handler<CriarFestaCommand>
 {
-    private readonly IMediatrHandler _mediator;
+    private readonly IMediatorHandler _mediator;
     private readonly IFestaRepository _repository;
     private readonly ILocacaoService _service;
 
     public CriarFestaCommandHandler(
-        IMediatrHandler mediator,
+        IMediatorHandler mediator,
         IFestaRepository repository,
         ILocacaoService service)
     {
